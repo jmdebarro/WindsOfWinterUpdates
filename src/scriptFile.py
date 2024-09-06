@@ -1,5 +1,5 @@
 from scrape.blogScraper import Scraper
-from email.emailer import Emailer
+from emailer.email import Emailer
 
 # Check for new Winds of Winter updates
 url = "https://georgerrmartin.com/notablog/"
