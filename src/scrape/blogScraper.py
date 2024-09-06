@@ -5,7 +5,7 @@ import openai
 import datetime
 
 class Scraper:
-    """Class for scraping websites"""
+    """Class for scraping GRRM blog"""
 
     def __init__(self, url):
         self.soup = None
@@ -14,9 +14,11 @@ class Scraper:
         self.url = url
         return
     
+
     def __str__(self):
         return f"URL - {self.url}\nVALID - {self.valid}\nDATE - {self.date}"
     
+
     # Gets HTML from websites
     def scrape(self):
 
@@ -24,7 +26,7 @@ class Scraper:
         result = requests.get(self.url)
         soup = BeautifulSoup(result.content, 'html.parser')
         self.soup = soup
-        return self
+        return self.blogParse()
     
 
     # Parses GRRM Blog
@@ -38,8 +40,8 @@ class Scraper:
         parsed_p = parsed.find_all("p")
         parsed_text = (" ").join([tag.string for tag in parsed_p if tag.string])
 
-        # response = self.analyzePost(parsed_text)
-        # self.valid = response == 'yes'
+        response = self.analyzePost(parsed_text)
+        self.valid = response == 'yes' and self.getDate()
         return self
     
 
@@ -83,7 +85,7 @@ class Scraper:
     
 url = "https://georgerrmartin.com/notablog/"
 test = Scraper(url)
-# print(test.scrape().blogParse())
+# print(test.scrape())
 
 # test.date = "September 4, 2024 at 11:54 am"
 # print(test.getDate())
